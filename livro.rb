@@ -1,5 +1,5 @@
 
-#base de Orientação a Objetos: dados e comportamento que são relacionados ficam no mesmo lugar.
+#base de Orientação a Objetos: dados(atributos) e comportamento(metodo) que são relacionados ficam no mesmo lugar.
 class Livro
     attr_reader :titulo, :preco, :ano_lancamento
   
@@ -33,11 +33,11 @@ class Livro
             base
         end
     end
-
 end
 
 class Estoque
-    
+    attr_reader :livros
+  
     def initialize
         @livros = []
     end
@@ -65,23 +65,42 @@ class Estoque
     def adiciona livro
         @livros << livro if livro
     end
-
 end
 
-    livro_rails = Livro.new("Agile Web Development with Rails", 70.00, 2011, true)
-    livro_ruby =  Livro.new("Programming Ruby 1.9", 60.00, 2010, true)
+class Array
+    attr_reader :maximo_necessario
+    #Houve uma sobreescrita no metodo << do tipo array que devolvia ele mesmo
+    def << (livro)
+        push (livro)
+        if @maximo_necessario.nil? || @maximo_necessario < size
+            @maximo_necessario = size
+        end
+        #ele precisa devolver o proprio array para não permitir que o metodo atual 
+        #quebre a compatibilidade com o << o original
+        self
+    end
+end
+
+
+    # livro_rails = Livro.new("Agile Web Development with Rails", 70.00, 2011, true)
+    # livro_ruby =  Livro.new("Programming Ruby 1.9", 60.00, 2010, true)
     algoritmos =  Livro.new("Algoritmos", 100, 1998, true)
     arquitetura = Livro.new("Introdução À Arquitetura e Design de Software", 70, 2011, true)
-
-    livros  = [livro_rails, livro_ruby]
+    programmer = Livro.new("The Pragmatic Programmer", 100, 1999, true)
+    ruby = Livro.new("The Pragmatic Programmer", 100, 1999, true)
+    # livros  = [livro_rails, livro_ruby]
 
     estoque = Estoque.new
-    estoque.adiciona algoritmos
-    estoque.adiciona arquitetura
-    estoque.adiciona Livro.new("The Pragmatic Programmer", 100, 1999, true)
-    estoque.adiciona Livro.new("Programming Ruby", 100, 2004, true)
-    estoque.adiciona nil
-
+    estoque.livros << algoritmos
+    puts estoque.livros.maximo_necessario
+    estoque.livros << arquitetura
+    puts estoque.livros.maximo_necessario
+    estoque.livros << programmer << ruby
+    puts estoque.livros.maximo_necessario
+    #method delete the type array
+    estoque.livros.delete algoritmos
+    puts estoque.livros.maximo_necessario
+    
   
     def imprime_nota_fiscal livros
         livros.each do |livro|
@@ -102,13 +121,14 @@ end
     #imprime_nota_fiscal livros 
     #livro_para_newsletter algoritmos 
  
-    baratos = mais_barato_que 80
-    baratos.each do |livro|
-        puts livro.titulo
-    end
+    # baratos = mais_barato_que 80
+    # baratos.each do |livro|
+    #     puts livro.titulo
+    # end
 
-    estoque.exporta_csv
-    estoque.total
+    # estoque.exporta_csv
+    # estoque.total
+    # estoque.livros.delete algoritmos
   
    
    
