@@ -25,19 +25,25 @@ arquitetura = Livro.new("Introdução À Arquitetura e Design de Software", 70, 
 programmer = Livro.new("The Pragmatic Programmer", 100, 1999, true, "editora", "livro")
 ruby = Livro.new("Programming Ruby", 100, 1999, true, "editora", "livro")
 revistona = Livro.new("Revista de Ruby", 10, 2012, true, "Revistas", "revista")
+online_arquitetura = Livro.new("Introdução a Arquitetura e Design de Software", 50, 2012, true, "editora", "ebook")
 # livros  = [livro_rails, livro_ruby]
 
 estoque = Estoque.new
-estoque << algoritmos << algoritmos << ruby << programmer << arquitetura << ruby << ruby 
+estoque << algoritmos << algoritmos << ruby << programmer << arquitetura << ruby << ruby << online_arquitetura
 estoque.vende ruby
 estoque.vende algoritmos
 estoque.vende algoritmos
 estoque.vende revistona
+estoque.vende online_arquitetura
+
 puts estoque.livro_que_mais_vendeu_por_titulo.titulo
 puts estoque.revista_que_mais_vendeu_por_titulo.titulo
+puts estoque.ebook_que_mais_vendeu_por_titulo.titulo
+puts estoque.respond_to?(:ebook_que_mais_vendeu_por_titulo)
+
 #method delete the type array
 
-puts estoque.maximo_necessario
+#puts estoque.maximo_necessario
     
 # imprime_nota_fiscal livros 
 # livro_para_newsletter algoritmos 
