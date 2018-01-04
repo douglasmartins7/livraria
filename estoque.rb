@@ -56,7 +56,10 @@ class Estoque
         #para que caso ele tenha um padrão determinado, extraimos seu tipo e campo e fazemos a invocação
         #se este método que está sendo invocado é deste tipo, caso seja faremos algo
         if matcher
-            #Agora dentro de nossa lógica, caso seja um método do tipo que_mais_vendeu_por precisamos saber qual o seu tipo (se é uma revista, livro ou ebook) e também seu campo (titulo, ano_lancamento, preço) e chamamos o método que_mais_vendeu_por passando o título e campo recebido:
+            # Agora dentro de nossa lógica, caso seja um método do tipo que_mais_vendeu_por precisamos
+            # saber qual o seu tipo (se é uma revista, livro ou ebook) 
+            # e também seu campo (titulo, ano_lancamento, preço)
+            # e chamamos o método que_mais_vendeu_por passando o título e campo recebido:
             tipo = matcher[1]
             campo = matcher[2].to_sym #pois precisamos converter para simbolo
             que_mais_vendeu_por(tipo, &campo)
@@ -66,7 +69,13 @@ class Estoque
         end
     end
 
-    #Isso ocorre porque toda vez que implementamos o method_missing para mudar o comportamento de métodos, precisamos sobrescrever também o método respond_to?. Então, em nosso caso, precisamos verificar se a chamada de método for equivalente ao método que esperamos ou se nossa classe pai responde por este método, e então devolvemos o nome do método.
+    #Isso ocorre porque toda vez que implementamos o method_missing para mudar o comportamento de 
+    # métodos, precisamos sobrescrever também o método respond_to?. Então, em nosso caso, precisamos
+    # verificar se a chamada de método for equivalente ao método que esperamos ou se nossa classe pai 
+    # responde por este método, e então devolvemos o nome do método.
+
+    # que verifique se o método que estamos chamando é equivalente ao que esperamos, ou se nossa 
+    # classe pai (super) responde por este método
     def respond_to?(name)
         name.to_s.match ("(.+)_que_mais_vendeu_por_(.+)") || super
     end
@@ -74,7 +83,9 @@ class Estoque
 
     private 
     #lambda
-    #Observe agora que os métodos que_mais_vendeu_por e quantidade_de_vendas_por não são chamados de fora de nossa classe, então vamos passa-los pra um escopo privado, para que não sejam invocados por outras classes:
+    # Observe agora que os métodos que_mais_vendeu_por e quantidade_de_vendas_por não 
+    # são chamados de fora de nossa classe, então vamos passa-los pra um escopo privado, 
+    # para que não sejam invocados por outras classes:
     def quantidade_de_vendas_por(produto, &campo)
         @vendas.count { |venda| campo.call(venda) == campo.call(produto) }
     end
