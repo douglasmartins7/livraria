@@ -14,15 +14,6 @@ class Estoque
         self
     end
 
-    def vende livro
-        @livros.delete livro
-        @vendas << livro
-    end
-
-    def maximo_necessario
-        @livros.maximo_necessario
-    end
-
     #usa o princípio Tell, Don't Ask. Ele não pergunta mais nada para o objeto livro apenas manda
     def exporta_csv 
         @livros.each do |livro|
@@ -77,7 +68,21 @@ class Estoque
     # que verifique se o método que estamos chamando é equivalente ao que esperamos, ou se nossa 
     # classe pai (super) responde por este método
     def respond_to?(name)
-        name.to_s.match ("(.+)_que_mais_vendeu_por_(.+)") || super
+        #se o método resultar com um match perfeito, ele devolve uma string
+        #A pratica do ! ou !! transforma o objeto em true ou false
+        #Isto é, se ele é vazio, ele vira true, que vira false. Se ele é uma string, vira false, que vira true.
+        #se há um objeto, retorna true, se não, false.
+        matched = name.to_s.match("(.+)_que_mais_vendeu_por_(.+)")
+        !!matched || super
+    end
+
+    def vende livro
+        @livros.delete livro
+        @vendas << livro
+    end
+
+    def maximo_necessario
+        @livros.maximo_necessario
     end
 
 
@@ -90,9 +95,14 @@ class Estoque
         @vendas.count { |venda| campo.call(venda) == campo.call(produto) }
     end
 
-    def que_mais_vendeu_por(tipo, &campo)
-        @vendas.select { | l | l.tipo == tipo}.sort {|v1,v2| quantidade_de_vendas_por(v1, &campo) <=> quantidade_de_vendas_por(v2, &campo)}.last
+    #Ao invés de buscar por um tipo específico, perguntando que tipo ele é (ask), iremos dizer a ele
+    # um tipo, e o próprio produto verifica se ele é do mesmo tipo que passamos, isto é, se tem um 
+    # match entre os tipos. Dessa maneira, não quebramos o encapsulamento da classe.
+   def que_mais_vendeu_por tipo, &campo
+        @vendas.select { |produto| produto.matches?(tipo)}.sort {|v1,v2|
+            quantidade_de_vendas_por(v1, &campo) <=>
+            quantidade_de_vendas_por(v2, &campo)
+        }.last
     end
 
-      
 end

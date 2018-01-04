@@ -1,4 +1,6 @@
 require_relative "livro"
+require_relative "revista"
+require_relative "ebook"
 require_relative "estoque"
 require_relative "float"
 
@@ -18,15 +20,13 @@ def livro_para_newsletter livro
       end
 end
 
-# livro_rails = Livro.new("Agile Web Development with Rails", 70.00, 2011, true)
-# livro_ruby =  Livro.new("Programming Ruby 1.9", 60.00, 2010, true)
-algoritmos =  Livro.new("Algoritmos", 100, 1998, true, "editora", "livro")
-arquitetura = Livro.new("Introdução À Arquitetura e Design de Software", 70, 2011, true, "editora", "livro")
-programmer = Livro.new("The Pragmatic Programmer", 100, 1999, true, "editora", "livro")
-ruby = Livro.new("Programming Ruby", 100, 1999, true, "editora", "livro")
-revistona = Livro.new("Revista de Ruby", 10, 2012, true, "Revistas", "revista")
-online_arquitetura = Livro.new("Introdução a Arquitetura e Design de Software", 50, 2012, true, "editora", "ebook")
-# livros  = [livro_rails, livro_ruby]
+algoritmos =  Livro.new("Algoritmos", 100, 1998, true, "", true)
+arquitetura = Livro.new("Introdução À Arquitetura e Design de Software", 70, 2011, true, "", false)
+programmer = Livro.new("The Pragmatic Programmer", 100, 1999, true, "", false)
+ruby = Livro.new("Programming Ruby", 100, 2004, true, "", false)
+revistona = Revista.new("Revista de Ruby", 10, 2012, true, "Revistas", 3)
+online_arquitetura = Ebook.new("Introdução a Arquitetura e Design de Software", 50, 2012, "")
+
 
 estoque = Estoque.new
 estoque << algoritmos << algoritmos << ruby << programmer << arquitetura << ruby << ruby << online_arquitetura
@@ -35,6 +35,10 @@ estoque.vende algoritmos
 estoque.vende algoritmos
 estoque.vende revistona
 estoque.vende online_arquitetura
+
+# estoque << livro << revistona
+# estoque.vende livro
+# estoque.vende revistona
 
 puts estoque.livro_que_mais_vendeu_por_titulo.titulo
 puts estoque.revista_que_mais_vendeu_por_titulo.titulo
@@ -53,7 +57,7 @@ puts estoque.respond_to?(:ebook_que_mais_vendeu_por_titulo)
 # end
 
 # estoque.exporta_csv
-puts "GERAL: #{estoque.total}"
+#puts "GERAL: #{estoque.total}"
 # estoque.livros.delete algoritmos
   
 
