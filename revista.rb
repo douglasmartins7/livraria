@@ -1,13 +1,10 @@
-class Revista
-    include Produto
+class Revista < Produto
+    include Impresso
   
     def initialize titulo, preco, ano_lancamento, possui_reimpressao, editora, numero
-        @titulo = titulo
-        @ano_lancamento = ano_lancamento
-        @possui_reimpressao = possui_reimpressao
-        @numero = numero
-        @preco = calcula_preco preco
-        @editora = editora       
+        super titulo, preco, ano_lancamento, editora
+        @possui_reimpressao = possui_reimpressao     
+        @numero = numero  
     end
 
     def matches? query

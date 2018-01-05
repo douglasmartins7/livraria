@@ -1,17 +1,16 @@
 require_relative 'produto'
+require_relative 'impresso'
 
 #base de Orientação a Objetos: dados(atributos) e comportamento(metodo) que são relacionados ficam no mesmo lugar.
-class Livro
-    #Livro se comporta como produto
-    include Produto
+class Livro < Produto
+    #livro é um produto(herança(< extende)/ class)
+    #Livro se comporta como impresso(composição(include)/ modulo)
+    include Impresso
   
     def initialize titulo, preco, ano_lancamento, possui_reimpressao, editora, possui_sobrecapa
-        @titulo = titulo
-        @ano_lancamento = ano_lancamento
+        super(titulo, preco, ano_lancamento, editora) 
         @possui_reimpressao = possui_reimpressao
         @possui_sobrecapa = possui_sobrecapa
-        @preco = calcula_preco preco
-        @editora = editora
     end
 
     

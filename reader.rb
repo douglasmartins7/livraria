@@ -46,3 +46,7 @@
 
 #No exercício anterior, criamos um método onde dizemos um tipo para um objeto ao invés de pedir o seu tipo. Na sua opinião, qual a vantagem de se adotar esse tipo de padrão?
 #Anwser: Adotando o padrão de dizer um tipo ao invés de pedi-lo (tell don't ask), evitamos quebrar o encapsulamento da classe, isto é, conhecendo mais do que a gente deveria.
+
+#Veja que construtores nos módulos podem ser perigosos. Quando colocamos um construtor num módulo, assumimos muito sobre a forma como esse módulo será utilizado. No entanto, na maioria das vezes, não temos como saber como esse módulo será usado e quais módulos serão combinados com ele. Dependendo do modo como os módulos são incluídos numa classe, o comportamento final pode ser bem estranho! Ao usar herança para definir um construtor comum a diversas classes, temos mais controle sobre essa combinação.
+
+#Um outro perigo que deve ser evitado ao usarmos módulos é escrever módulos que alteram o estado do classe na qual são incluídos. No nosso caso, os construtores dos módulos alteravam o valor de variáveis membro das outras classes. Novamente, isso é perigoso pois não controlamos a forma como os módulos são combinados. Por isso, deve-se evitar ao máximo alterar variáveis membro de uma classe a partir de um módulo. O ideal é que um módulo acesse somente métodos públicos da classe na qual ele vai ser incluído.
